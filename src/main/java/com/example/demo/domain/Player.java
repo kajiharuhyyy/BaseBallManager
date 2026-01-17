@@ -10,10 +10,12 @@ import jakarta.persistence.Table;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "players")
 @Getter
+@Setter
 @NoArgsConstructor
 public class Player {
 	

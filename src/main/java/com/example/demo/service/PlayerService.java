@@ -73,4 +73,20 @@ public class PlayerService {
 		return playerRepository.findById(id)
 				.orElseThrow(() -> new IllegalArgumentException("Invalid plaer ID: " + id));
 	}
+	
+	@Transactional
+	public Player update(Long id, PlayerForm form) {
+		Player player = getById(id);
+		
+		player.setName(form.getName());
+		player.setPosition(form.getPosition());
+		player.setUniformNumber(form.getUniformNumber());
+		
+		return player;
+	}
+	
+	@Transactional
+	public void delete(Long id) {
+		playerRepository.deleteById(id);
+	}
 }

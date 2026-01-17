@@ -1,6 +1,6 @@
 CREATE TABLE players (
     id BIGINT AUTO_INCREMENT PRIMARY KEY, --id
-    name VARCHAR(50), -- 名前
+    name VARCHAR(50) NOT NULL, -- 名前
     position VARCHAR(20) NOT NULL, -- ポジション
     uniform_number INT NOT NULL -- 背番号
 );
