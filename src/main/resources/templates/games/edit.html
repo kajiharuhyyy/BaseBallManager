@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>試合編集</title>
+    <style>
+        body { font-family: sans-serif; margin: 24px; }
+        h1 { margin-bottom: 16px; }
+        form { max-width: 480px; }
+        .field { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; }
+        input { width: 100%; padding: 6px; box-sizing: border-box; }
+        .error { color: #c33; font-size: 0.9rem; margin-top: 4px; }
+        .actions { display: flex; gap: 8px; margin-top: 16px; }
+        .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>試合編集</h1>
+
+    <form th:action="@{/games/{id}/edit(id=${gameForm.id})}" th:object="${gameForm}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="field">
+            <label for="gameDate">試合日</label>
+            <input id="gameDate" type="date" th:field="*{gameDate}">
+            <div class="error" th:if="${#fields.hasErrors('gameDate')}" th:errors="*{gameDate}"></div>
+        </div>
+
+        <div class="field">
+            <label for="opponent">対戦相手</label>
+            <input id="opponent" type="text" th:field="*{opponent}">
+        </div>
+
+        <div class="field">
+            <label for="myScore">自チーム得点</label>
+            <input id="myScore" type="number" th:field="*{myScore}">
+        </div>
+
+        <div class="field">
+            <label for="opponentScore">相手得点</label>
+            <input id="opponentScore" type="number" th:field="*{opponentScore}">
+        </div>
+
+        <div class="actions">
+            <button class="btn" type="submit">更新</button>
+            <a class="btn" th:href="@{/games}">戻る</a>
+        </div>
+    </form>
+</body>
+</html>

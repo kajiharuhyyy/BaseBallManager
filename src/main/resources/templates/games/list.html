@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>試合一覧</title>
+    <style>
+        body { font-family: sans-serif; margin: 24px; }
+        h1 { margin-bottom: 16px; }
+        form { margin-bottom: 16px; }
+        label { margin-right: 12px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f3f3f3; }
+        .actions { display: flex; gap: 8px; }
+        .actions form { margin: 0; }
+        .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
+        .btn-danger { border-color: #c33; color: #c33; }
+        select, input[type="date"], input[type="number"], input[type="text"] { padding: 6px; }
+    </style>
+</head>
+<body>
+    <h1>試合一覧</h1>
+
+    <form method="get" th:action="@{/games}">
+        <label>
+            試合日
+            <input type="date" name="gameDate" th:value="${param.gameDate}">
+        </label>
+        <label>
+            対戦相手
+            <input type="text" name="opponent" th:value="${param.opponent}">
+        </label>
+        <label>
+            自チーム得点
+            <input type="number" name="myScore" th:value="${param.myScore}">
+        </label>
+        <label>
+            相手得点
+            <input type="number" name="opponentScore" th:value="${param.opponentScore}">
+        </label>
+        <button class="btn" type="submit">検索</button>
+        <a class="btn" th:href="@{/games/new}">新規登録</a>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>試合日</th>
+                <th>対戦相手</th>
+                <th>自チーム得点</th>
+                <th>相手得点</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(games)}">
+                <td colspan="6">試合が登録されていません。</td>
+            </tr>
+            <tr th:each="game : ${games}">
+                <td th:text="${game.id}"></td>
+                <td th:text="${game.gameDate}"></td>
+                <td th:text="${game.opponent}"></td>
+                <td th:text="${game.myScore}"></td>
+                <td th:text="${game.opponentScore}"></td>
+                <td>
+                    <div class="actions">
+                        <a class="btn" th:href="@{/games/{id}/edit(id=${game.id})}">編集</a>
+                        <form th:action="@{/games/{id}/delete(id=${game.id})}" method="post"
+                              onsubmit="return confirm('削除しますか？');">
+                            <button class="btn btn-danger" type="submit">削除</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
