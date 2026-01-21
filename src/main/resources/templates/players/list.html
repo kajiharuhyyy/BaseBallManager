@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>選手一覧</title>
+    <style>
+        body { font-family: sans-serif; margin: 24px; }
+        h1 { margin-bottom: 16px; }
+        form { margin-bottom: 16px; }
+        label { margin-right: 12px; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f3f3f3; }
+        .actions { display: flex; gap: 8px; }
+        .actions form { margin: 0; }
+        .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
+        .btn-danger { border-color: #c33; color: #c33; }
+    </style>
+</head>
+<body>
+    <h1>選手一覧</h1>
+
+    <form method="get" th:action="@{/players}">
+        <label>
+            名前
+            <input type="text" name="name" th:value="${param.name}">
+        </label>
+        <label>
+            ポジション
+            <input type="text" name="position" th:value="${param.position}">
+        </label>
+        <label>
+            背番号
+            <input type="number" name="uniformNumber" th:value="${param.uniformNumber}">
+        </label>
+        <button class="btn" type="submit">検索</button>
+        <a class="btn" th:href="@{/players/new}">新規登録</a>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>ポジション</th>
+                <th>背番号</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(players)}">
+                <td colspan="5">選手が登録されていません。</td>
+            </tr>
+            <tr th:each="player : ${players}">
+                <td th:text="${player.id}"></td>
+                <td th:text="${player.name}"></td>
+                <td th:text="${player.position}"></td>
+                <td th:text="${player.uniformNumber}"></td>
+                <td>
+                    <div class="actions">
+                        <a class="btn" th:href="@{/players/{id}/edit(id=${player.id})}">編集</a>
+                        <form th:action="@{/players/{id}/delete(id=${player.id})}" method="post"
+                              onsubmit="return confirm('削除しますか？');">
+                            <button class="btn btn-danger" type="submit">削除</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</body>
+</html>
