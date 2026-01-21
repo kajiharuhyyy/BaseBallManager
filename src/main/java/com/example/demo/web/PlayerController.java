@@ -2,9 +2,13 @@ package com.example.demo.web;
 
 import java.util.List;
 
+import jakarta.validation.Valid;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -33,12 +37,27 @@ public class PlayerController {
 		return "players/list";
 	}
 	
-	@PostMapping("/plsyers/new")
+	@GetMapping("/plsyers/new")
 	public String newTeamMember(Model model) {
 		PlayerForm form = new PlayerForm();
 		
 		model.addAttribute("playerForm", form);
 		return "players/new";
+	}
+	
+	@PostMapping("/players")
+	public String createTeamMember(
+			@Valid @ModelAttribute PlayerForm form,
+			BindingResult bindingResult,
+			Model model) {
+		
+		if (bindingResult.hasErrors()) {
+			model.addAttribute("playerForm", form);
+			return "players/new";
+		}
+		
+		playerService.create(form);
+		return "redirect:/players";
 	}
 
 }	

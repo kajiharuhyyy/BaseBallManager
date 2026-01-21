@@ -71,7 +71,7 @@ public class PlayerService {
 	
 	public Player getById(Long id) {
 		return playerRepository.findById(id)
-				.orElseThrow(() -> new IllegalArgumentException("Invalid plaer ID: " + id));
+				.orElseThrow(() -> new IllegalArgumentException("Invalid player ID: " + id));
 	}
 	
 	@Transactional
