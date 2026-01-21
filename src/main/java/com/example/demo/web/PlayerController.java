@@ -38,7 +38,7 @@ public class PlayerController {
 		return "players/list";
 	}
 	
-	@GetMapping("/plsyers/new")
+	@GetMapping("/players/new")
 	public String newTeamMember(Model model) {
 		PlayerForm form = new PlayerForm();
 		

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>選手登録</title>
+    <style>
+        body { font-family: sans-serif; margin: 24px; }
+        h1 { margin-bottom: 16px; }
+        form { max-width: 480px; }
+        .field { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; }
+        input, select { width: 100%; padding: 6px; box-sizing: border-box; }
+        .error { color: #c33; font-size: 0.9rem; margin-top: 4px; }
+        .actions { display: flex; gap: 8px; margin-top: 16px; }
+        .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>選手登録</h1>
+
+    <form th:action="@{/players}" th:object="${playerForm}" method="post">
+        <div class="field">
+            <label for="name">名前</label>
+            <input id="name" type="text" th:field="*{name}">
+            <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="field">
+            <label for="position">ポジション</label>
+            <select id="position" th:field="*{position}">
+                <option value="">選択してください</option>
+                <option value="投手">投手</option>
+                <option value="捕手">捕手</option>
+                <option value="内野手">内野手</option>
+                <option value="外野手">外野手</option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></div>
+        </div>
+
+        <div class="field">
+            <label for="uniformNumber">背番号</label>
+            <input id="uniformNumber" type="number" th:field="*{uniformNumber}">
+            <div class="error" th:if="${#fields.hasErrors('uniformNumber')}" th:errors="*{uniformNumber}"></div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" type="submit">登録</button>
+            <a class="btn" th:href="@{/players}">戻る</a>
+        </div>
+    </form>
+</body>
+</html>

@@ -19,6 +19,6 @@ public class PlayerForm {
 	@Size(max = 20)
 	private String position;
 	
-	@NotBlank(message = "背番号を入れてください")
+	@NotNull
 	private Integer uniformNumber;
 }
