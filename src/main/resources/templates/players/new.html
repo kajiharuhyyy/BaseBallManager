@@ -9,7 +9,7 @@
         form { max-width: 480px; }
         .field { margin-bottom: 12px; }
         label { display: block; margin-bottom: 4px; }
-        input { width: 100%; padding: 6px; box-sizing: border-box; }
+        input, select { width: 100%; padding: 6px; box-sizing: border-box; }
         .error { color: #c33; font-size: 0.9rem; margin-top: 4px; }
         .actions { display: flex; gap: 8px; margin-top: 16px; }
         .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
@@ -27,7 +27,13 @@
 
         <div class="field">
             <label for="position">ポジション</label>
-            <input id="position" type="text" th:field="*{position}">
+            <select id="position" th:field="*{position}">
+                <option value="">選択してください</option>
+                <option value="投手">投手</option>
+                <option value="捕手">捕手</option>
+                <option value="内野手">内野手</option>
+                <option value="外野手">外野手</option>
+            </select>
             <div class="error" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></div>
         </div>
 

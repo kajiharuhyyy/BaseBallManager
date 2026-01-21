@@ -8,6 +8,7 @@
         h1 { margin-bottom: 16px; }
         form { margin-bottom: 16px; }
         label { margin-right: 12px; }
+        select { padding: 6px; }
         table { border-collapse: collapse; width: 100%; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
         th { background: #f3f3f3; }
@@ -27,7 +28,13 @@
         </label>
         <label>
             ポジション
-            <input type="text" name="position" th:value="${param.position}">
+            <select name="position">
+                <option value="" th:selected="${param.position == null or param.position.isEmpty()}">指定なし</option>
+                <option value="投手" th:selected="${param.position == '投手'}">投手</option>
+                <option value="捕手" th:selected="${param.position == '捕手'}">捕手</option>
+                <option value="内野手" th:selected="${param.position == '内野手'}">内野手</option>
+                <option value="外野手" th:selected="${param.position == '外野手'}">外野手</option>
+            </select>
         </label>
         <label>
             背番号
