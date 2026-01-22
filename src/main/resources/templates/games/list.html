@@ -66,6 +66,7 @@
                 <td>
                     <div class="actions">
                         <a class="btn" th:href="@{/games/{id}/edit(id=${game.id})}">編集</a>
+						<a class="btn" th:href="@{/games/{id}/result(id=${game.id})}">結果入力</a>
                         <form th:action="@{/games/{id}/delete(id=${game.id})}" method="post"
                               onsubmit="return confirm('削除しますか？');">
                             <button class="btn btn-danger" type="submit">削除</button>

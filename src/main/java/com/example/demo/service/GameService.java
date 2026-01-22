@@ -39,8 +39,6 @@ public class GameService {
 		Game game = Game.builder()
 				.gameDate(form.getGameDate())
 				.opponent(form.getOpponent())
-				.myScore(form.getMyScore())
-				.opponentScore(form.getOpponentScore())
 				.build();
 		
 		return gameRepository.save(game);
@@ -57,8 +55,16 @@ public class GameService {
 		
 		game.setGameDate(form.getGameDate());
 		game.setOpponent(form.getOpponent());
-		game.setMyScore(form.getMyScore());
-		game.setOpponentScore(form.getOpponentScore());
+		
+		return game;
+	}
+	
+	@Transactional
+	public Game updateResult(Long id, Integer myScore, Integer opponentScore) {
+		Game game = getById(id);
+		
+		game.setMyScore(myScore);
+		game.setOpponentScore(opponentScore);
 		
 		return game;
 	}

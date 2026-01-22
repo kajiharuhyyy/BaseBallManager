@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.example.demo.domain.Game;
 import com.example.demo.service.GameService;
 import com.example.demo.web.form.GameForm;
+import com.example.demo.web.form.GameResultForm;
 
 import lombok.RequiredArgsConstructor;
 
@@ -72,8 +73,6 @@ public class GameController {
         form.setId(game.getId());
         form.setGameDate(game.getGameDate());
         form.setOpponent(game.getOpponent()); 
-        form.setMyScore(game.getMyScore());
-        form.setOpponentScore(game.getOpponentScore());
 
         model.addAttribute("gameForm", form);
         return "games/edit";
@@ -93,6 +92,36 @@ public class GameController {
         gameService.update(id, form);
         return "redirect:/games"; 
     }
+    
+    @GetMapping("/games/{id}/result")
+    public String editResult(@PathVariable Long id, Model model) {
+    	Game game = gameService.getById(id);
+    	
+    	GameResultForm form = new GameResultForm();
+    	form.setId(game.getId());
+    	form.setMyScore(game.getMyScore());
+    	form.setOpponentScore(game.getOpponentScore());
+    	
+    	model.addAttribute("gameResultForm", form);
+    	return "games/result";
+    }
+    
+    @PostMapping("/games/{id}/result")
+    public String updateResult(
+    		@PathVariable Long id,
+    		@Valid @ModelAttribute GameResultForm form,
+    		BindingResult bindingResult,
+    		Model model) {
+    	
+    	if (bindingResult.hasErrors()) {
+			model.addAttribute("gameResultForm", form);
+			return "games/result";
+		}
+    	
+    	gameService.updateResult(id, form.getMyScore(), form.getOpponentScore());
+    	return "redirect:/games";
+    }
+    
 
     @PostMapping("/games/{id}/delete")
     public String deleteGame(@PathVariable Long id) {

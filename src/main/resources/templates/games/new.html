@@ -30,16 +30,6 @@
             <input id="opponent" type="text" th:field="*{opponent}">
         </div>
 
-        <div class="field">
-            <label for="myScore">自チーム得点</label>
-            <input id="myScore" type="number" th:field="*{myScore}">
-        </div>
-
-        <div class="field">
-            <label for="opponentScore">相手得点</label>
-            <input id="opponentScore" type="number" th:field="*{opponentScore}">
-        </div>
-
         <div class="actions">
             <button class="btn" type="submit">登録</button>
             <a class="btn" th:href="@{/games}">戻る</a>
