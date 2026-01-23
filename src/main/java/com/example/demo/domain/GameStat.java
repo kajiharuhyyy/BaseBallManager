@@ -1,5 +1,7 @@
 package com.example.demo.domain;
 
+import java.math.BigDecimal;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -47,7 +49,7 @@ public class GameStat {
 	private Integer stolenBases;
 	
 	@Column(name = "innings_pitched", nullable = false)
-	private Integer inningsPitched;
+	private BigDecimal inningsPitched;
 	
 	@Column(name = "runs_allowed", nullable = false)
 	private Integer runsAllowed;
@@ -59,7 +61,7 @@ public class GameStat {
 	@Builder
 	public GameStat(Long id, Long gameId , Long playerId, Integer atBats, Integer hits, 
 			Integer homeRuns, Integer walks, Integer stolenBases, 
-			Integer inningsPitched, Integer runsAllowed, Wins wins) {
+			BigDecimal inningsPitched, Integer runsAllowed, Wins wins) {
 		
 		this.atBats = atBats;
 		this.hits = hits;
