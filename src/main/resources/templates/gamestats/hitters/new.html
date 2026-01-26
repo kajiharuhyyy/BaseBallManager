@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>打者成績入力</title>
+    <style>
+        body { font-family: sans-serif; margin: 24px; }
+        h1 { margin-bottom: 16px; }
+        form { max-width: 480px; }
+        .field { margin-bottom: 12px; }
+        label { display: block; margin-bottom: 4px; }
+        input { width: 100%; padding: 6px; box-sizing: border-box; }
+        .error { color: #c33; font-size: 0.9rem; margin-top: 4px; }
+        .actions { display: flex; gap: 8px; margin-top: 16px; }
+        .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <h1>打者成績入力</h1>
+
+    <form th:action="@{/gamestats/hitters}" th:object="${gameStatHitterForm}" method="post">
+        <div class="field">
+            <label for="gameId">試合ID</label>
+            <input id="gameId" type="number" th:field="*{gameId}">
+            <div class="error" th:if="${#fields.hasErrors('gameId')}" th:errors="*{gameId}"></div>
+        </div>
+
+        <div class="field">
+            <label for="playerId">選手ID</label>
+            <input id="playerId" type="number" th:field="*{playerId}">
+            <div class="error" th:if="${#fields.hasErrors('playerId')}" th:errors="*{playerId}"></div>
+        </div>
+
+        <div class="field">
+            <label for="atBats">打数</label>
+            <input id="atBats" type="number" th:field="*{atBats}">
+            <div class="error" th:if="${#fields.hasErrors('atBats')}" th:errors="*{atBats}"></div>
+        </div>
+
+        <div class="field">
+            <label for="hits">安打</label>
+            <input id="hits" type="number" th:field="*{hits}">
+            <div class="error" th:if="${#fields.hasErrors('hits')}" th:errors="*{hits}"></div>
+        </div>
+
+        <div class="field">
+            <label for="homeRuns">本塁打</label>
+            <input id="homeRuns" type="number" th:field="*{homeRuns}">
+            <div class="error" th:if="${#fields.hasErrors('homeRuns')}" th:errors="*{homeRuns}"></div>
+        </div>
+
+        <div class="field">
+            <label for="walks">四球</label>
+            <input id="walks" type="number" th:field="*{walks}">
+            <div class="error" th:if="${#fields.hasErrors('walks')}" th:errors="*{walks}"></div>
+        </div>
+
+        <div class="field">
+            <label for="stolenBases">盗塁</label>
+            <input id="stolenBases" type="number" th:field="*{stolenBases}">
+            <div class="error" th:if="${#fields.hasErrors('stolenBases')}" th:errors="*{stolenBases}"></div>
+        </div>
+
+        <div class="actions">
+            <button class="btn" type="submit">登録</button>
+            <a class="btn" th:href="@{/gamestats}">戻る</a>
+        </div>
+    </form>
+</body>
+</html>

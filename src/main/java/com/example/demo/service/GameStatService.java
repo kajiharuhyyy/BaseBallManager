@@ -51,16 +51,16 @@ public class GameStatService {
     @Transactional
     public GameStat createHitter(GameStatHitterForm form) {
         GameStat gameStat = GameStat.builder()
-            .gameId(form.getGameId())
-            .playerId(form.getPlayerId())
-            .atBats(form.getAtBats())
-            .hits(form.getHits())
-            .homeRuns(form.getHomeRuns())
-            .walks(form.getWalks())
-            .stolenBases(form.getStolenBases())
-            .inningsPitched(BigDecimal.ZERO)
-            .runsAllowed(0)
-            .wins(Wins.NONE)
+	            .gameId(form.getGameId())
+	            .playerId(form.getPlayerId())
+	            .atBats(form.getAtBats())
+	            .hits(form.getHits())
+	            .homeRuns(form.getHomeRuns())
+	            .walks(form.getWalks())
+	            .stolenBases(form.getStolenBases())
+	            .inningsPitched(BigDecimal.ZERO)
+	            .runsAllowed(0)
+	            .wins(Wins.NONE)
             .build();
 
         return gameStatRepository.save(gameStat);

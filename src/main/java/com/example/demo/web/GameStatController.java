@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -45,7 +46,7 @@ public class GameStatController {
 				hits, homeRuns, walks, stolenBases, inningsPitched, runsAllowed, wins);
 		
 		model.addAttribute("gamestatus", gamestatus);
-		return "gamestatus/list";
+		return "gamestats/list";
 				
 	}
 	
@@ -73,6 +74,7 @@ public class GameStatController {
 		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("gameStatHitterForm", hForm);
+			return "gamestats/hitters/new"; 
 		}
 		
 		gameStatService.createHitter(hForm);
@@ -86,11 +88,84 @@ public class GameStatController {
 		
 		if (bindingResult.hasErrors()) {
 			model.addAttribute("gameStatPitcherForm", pForm);
+			return "gamestats/pitchers/new"; 
 		}
 		
 		gameStatService.createPitcher(pForm);
 		return "redirect:/gamestats";
 	}
+	
+	@GetMapping("/gamestats/hitters/{id}/edit")
+    public String editHitStat(@PathVariable Long id,
+            Model model) {
+        GameStat gameStatusHitter = gameStatService.getById(id);
+
+        GameStatHitterForm hForm = new GameStatHitterForm();
+        hForm.setId(gameStatusHitter.getId());
+        hForm.setGameId(gameStatusHitter.getGameId());
+        hForm.setPlayerId(gameStatusHitter.getPlayerId()); 
+        hForm.setAtBats(gameStatusHitter.getAtBats());
+        hForm.setHits(gameStatusHitter.getHits());
+        hForm.setHomeRuns(gameStatusHitter.getHomeRuns());
+        hForm.setWalks(gameStatusHitter.getWalks());
+        hForm.setStolenBases(gameStatusHitter.getStolenBases());
+
+        model.addAttribute("gameStatHitterForm", hForm);
+        return "gamestats/hitters/edit";
+    }
+	
+	@GetMapping("/gamestats/pitchers/{id}/edit")
+    public String editPitchStat(@PathVariable Long id,
+            Model model) {
+        GameStat gameStatusPitcher = gameStatService.getById(id);
+
+        GameStatPitcherForm pForm = new GameStatPitcherForm();
+        pForm.setId(gameStatusPitcher.getId());
+        pForm.setGameId(gameStatusPitcher.getGameId());
+        pForm.setPlayerId(gameStatusPitcher.getPlayerId()); 
+        pForm.setInningsPitched(gameStatusPitcher.getInningsPitched());
+        pForm.setRunsAllowed(gameStatusPitcher.getRunsAllowed());
+        pForm.setWins(gameStatusPitcher.getWins());
+
+        model.addAttribute("gameStatPitcherForm", pForm);
+        return "gamestats/pitchers/edit";
+    }
+
+    @PostMapping("/gamestats/hitters/{id}/edit")
+    public String updateHitStat(@PathVariable Long id, 
+            @Valid @ModelAttribute GameStatHitterForm hForm, 
+            BindingResult bindingResult, 
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("gameStatHitterForm", hForm);
+            return "gamestats/hitters/edit";
+        }
+
+        gameStatService.updateHitter(id, hForm);
+        return "redirect:/gamestats"; 
+    }
+    
+    @PostMapping("/gamestats/pitchers/{id}/edit")
+    public String updateGame(@PathVariable Long id, 
+            @Valid @ModelAttribute GameStatPitcherForm pForm, 
+            BindingResult bindingResult, 
+            Model model) {
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("gameStatPitcherForm", pForm);
+            return "gamestats/pitchers/edit";
+        }
+
+        gameStatService.updatePitcher(id, pForm);
+        return "redirect:/gamestats"; 
+    }
+
+    @PostMapping("/gamestats/{id}/delete")
+    public String deleteStat(@PathVariable Long id) {
+    	gameStatService.delete(id);
+        return "redirect:/gamestats"; 
+    }
 	
 
 }
