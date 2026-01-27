@@ -3,22 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>試合結果入力</title>
-    <style>
-        body { font-family: sans-serif; margin: 24px; }
-        h1 { margin-bottom: 16px; }
-        form { max-width: 480px; }
-        .field { margin-bottom: 12px; }
-        label { display: block; margin-bottom: 4px; }
-        input { width: 100%; padding: 6px; box-sizing: border-box; }
-        .error { color: #c33; font-size: 0.9rem; margin-top: 4px; }
-        .actions { display: flex; gap: 8px; margin-top: 16px; }
-        .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
-    <h1>試合結果入力</h1>
-
-    <form th:action="@{/games/{id}/result(id=${gameResultForm.id})}" th:object="${gameResultForm}" method="post">
+	<div class="page">
+	    <h1>試合結果入力</h1>
+	    <div class="subtitle">得点結果を入力してください。</div>
+	    <div class="card">
+	        <form th:action="@{/games/{id}/result(id=${gameResultForm.id})}" th:object="${gameResultForm}" method="post">
         <input type="hidden" th:field="*{id}">
 
         <div class="field">
@@ -33,10 +25,12 @@
             <div class="error" th:if="${#fields.hasErrors('opponentScore')}" th:errors="*{opponentScore}"></div>
         </div>
 
-        <div class="actions">
-            <button class="btn" type="submit">保存</button>
-            <a class="btn" th:href="@{/games}">戻る</a>
+		    <div class="actions">
+		        <button class="btn btn-primary" type="submit">保存</button>
+		        <a class="btn" th:href="@{/games}">戻る</a>
+		    </div>
+		</form>
         </div>
-    </form>
+    </div>
 </body>
 </html>

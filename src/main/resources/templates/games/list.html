@@ -3,25 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>試合一覧</title>
-    <style>
-        body { font-family: sans-serif; margin: 24px; }
-        h1 { margin-bottom: 16px; }
-        form { margin-bottom: 16px; }
-        label { margin-right: 12px; }
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
-        th { background: #f3f3f3; }
-        .actions { display: flex; gap: 8px; }
-        .actions form { margin: 0; }
-        .btn { padding: 6px 10px; border: 1px solid #888; background: #fff; cursor: pointer; }
-        .btn-danger { border-color: #c33; color: #c33; }
-        select, input[type="date"], input[type="number"], input[type="text"] { padding: 6px; }
-    </style>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
-    <h1>試合一覧</h1>
+	<div class="page">
+	    <div class="header">
+	        <div>
+	            <h1>試合一覧</h1>
+	            <div class="subtitle">試合情報を検索・管理できます。</div>
+	        </div>
+	        <a class="btn btn-primary" th:href="@{/games/new}">新規登録</a>
+	    </div>
 
-    <form method="get" th:action="@{/games}">
+		<div class="card">
+		<form class="grid" method="get" th:action="@{/games}">
         <label>
             試合日
             <input type="date" name="gameDate" th:value="${param.gameDate}">
@@ -38,10 +33,11 @@
             相手得点
             <input type="number" name="opponentScore" th:value="${param.opponentScore}">
         </label>
-        <button class="btn" type="submit">検索</button>
-        <a class="btn" th:href="@{/games/new}">新規登録</a>
+        <button class="btn btn-primary" type="submit">検索</button>
     </form>
+	</div>
 
+	<div class="card" style="margin-top: 16px;">
     <table>
         <thead>
             <tr>
@@ -66,7 +62,7 @@
                 <td>
                     <div class="actions">
                         <a class="btn" th:href="@{/games/{id}/edit(id=${game.id})}">編集</a>
-						<a class="btn" th:href="@{/games/{id}/result(id=${game.id})}">結果入力</a>
+                        <a class="btn btn-secondary" th:href="@{/games/{id}/result(id=${game.id})}">結果入力</a>
                         <form th:action="@{/games/{id}/delete(id=${game.id})}" method="post"
                               onsubmit="return confirm('削除しますか？');">
                             <button class="btn btn-danger" type="submit">削除</button>
@@ -76,5 +72,7 @@
             </tr>
         </tbody>
     </table>
+	</div>
+	</div>
 </body>
 </html>
