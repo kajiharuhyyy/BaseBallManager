@@ -111,6 +111,8 @@ public class GameStatService {
     public GameStat updatePitcher(Long id, GameStatPitcherForm form) {
         GameStat gameStat = getById(id);
 
+        gameStat.setGameId(form.getGameId());
+        gameStat.setPlayerId(form.getPlayerId());
         gameStat.setInningsPitched(form.getInningsPitched());
         gameStat.setRunsAllowed(form.getRunsAllowed());
         gameStat.setWins(form.getWins());

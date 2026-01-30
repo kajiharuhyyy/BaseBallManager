@@ -6,6 +6,7 @@
     <link rel="stylesheet" th:href="@{/css/app.css}">
 </head>
 <body>
+	<div th:replace="fragments/nav :: nav"></div>
     <div class="page">
         <h1>打者成績入力</h1>
         <div class="subtitle">打撃成績のみ入力してください。</div>
@@ -13,13 +14,21 @@
             <form th:action="@{/gamestats/hitters}" th:object="${gameStatHitterForm}" method="post">
                 <div class="field">
                     <label for="gameId">試合ID</label>
-                    <input id="gameId" type="number" th:field="*{gameId}">
+					<select id="gameId" th:field="*{gameId}">
+					    <option value="" disabled selected>選択してください</option>
+					    <option th:each="game : ${games}" th:value="${game.id}"
+					            th:text="${game.gameDate + ' / ' + game.opponent}"></option>
+					</select>
                     <div class="error" th:if="${#fields.hasErrors('gameId')}" th:errors="*{gameId}"></div>
                 </div>
 
                 <div class="field">
                     <label for="playerId">選手ID</label>
-                    <input id="playerId" type="number" th:field="*{playerId}">
+					<select id="playerId" th:field="*{playerId}">
+					    <option value="" disabled selected>選択してください</option>
+					    <option th:each="player : ${players}" th:value="${player.id}"
+					            th:text="${'#' + player.uniformNumber + ' ' + player.name}"></option>
+					</select>
                     <div class="error" th:if="${#fields.hasErrors('playerId')}" th:errors="*{playerId}"></div>
                 </div>
 

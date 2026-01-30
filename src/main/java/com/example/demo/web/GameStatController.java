@@ -16,7 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.example.demo.domain.GameStat;
 import com.example.demo.domain.Wins;
+import com.example.demo.service.GameService;
 import com.example.demo.service.GameStatService;
+import com.example.demo.service.PlayerService;
 import com.example.demo.web.form.GameStatHitterForm;
 import com.example.demo.web.form.GameStatPitcherForm;
 
@@ -27,6 +29,8 @@ import lombok.RequiredArgsConstructor;
 public class GameStatController {
 	
 	private final GameStatService gameStatService;
+	private final GameService gameService;
+	private final PlayerService playerService;
 	
 	@GetMapping("/gamestats")
 	public String listStat(
@@ -55,6 +59,7 @@ public class GameStatController {
 		GameStatHitterForm hForm = new GameStatHitterForm();
 		
 		model.addAttribute("gameStatHitterForm", hForm);
+		addReferenceData(model);
 		return "gamestats/hitters/new";
 	}
 	
@@ -63,6 +68,7 @@ public class GameStatController {
 		GameStatPitcherForm pForm = new GameStatPitcherForm();
 		
 		model.addAttribute("gameStatPitcherForm", pForm);
+		addReferenceData(model);
 		return "gamestats/pitchers/new";
 	}
 	
@@ -98,19 +104,20 @@ public class GameStatController {
 	@GetMapping("/gamestats/hitters/{id}/edit")
     public String editHitStat(@PathVariable Long id,
             Model model) {
-        GameStat gameStatusHitter = gameStatService.getById(id);
+        GameStat gameStat = gameStatService.getById(id);
 
         GameStatHitterForm hForm = new GameStatHitterForm();
-        hForm.setId(gameStatusHitter.getId());
-        hForm.setGameId(gameStatusHitter.getGameId());
-        hForm.setPlayerId(gameStatusHitter.getPlayerId()); 
-        hForm.setAtBats(gameStatusHitter.getAtBats());
-        hForm.setHits(gameStatusHitter.getHits());
-        hForm.setHomeRuns(gameStatusHitter.getHomeRuns());
-        hForm.setWalks(gameStatusHitter.getWalks());
-        hForm.setStolenBases(gameStatusHitter.getStolenBases());
+        hForm.setId(gameStat.getId());
+        hForm.setGameId(gameStat.getGameId());
+        hForm.setPlayerId(gameStat.getPlayerId()); 
+        hForm.setAtBats(gameStat.getAtBats());
+        hForm.setHits(gameStat.getHits());
+        hForm.setHomeRuns(gameStat.getHomeRuns());
+        hForm.setWalks(gameStat.getWalks());
+        hForm.setStolenBases(gameStat.getStolenBases());
 
         model.addAttribute("gameStatHitterForm", hForm);
+		addReferenceData(model);
         return "gamestats/hitters/edit";
     }
 	
@@ -128,6 +135,7 @@ public class GameStatController {
         pForm.setWins(gameStat.getWins());
 
         model.addAttribute("gameStatPitcherForm", pForm);
+		addReferenceData(model);
         return "gamestats/pitchers/edit";
     }
 
@@ -139,6 +147,7 @@ public class GameStatController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("gameStatHitterForm", hForm);
+    		addReferenceData(model);
             return "gamestats/hitters/edit";
         }
 
@@ -154,6 +163,7 @@ public class GameStatController {
 
         if (bindingResult.hasErrors()) {
             model.addAttribute("gameStatPitcherForm", pForm);
+    		addReferenceData(model);
             return "gamestats/pitchers/edit";
         }
 
@@ -168,4 +178,8 @@ public class GameStatController {
     }
 	
 
+    private void addReferenceData(Model model) {
+		model.addAttribute("players", playerService.search(null, null, null));
+		model.addAttribute("games", gameService.search(null, null, null, null));
+	}
 }

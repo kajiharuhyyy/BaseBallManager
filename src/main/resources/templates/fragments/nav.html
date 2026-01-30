@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<body>
+    <nav class="navbar" th:fragment="nav">
+        <div class="nav-brand">
+            <a th:href="@{/}">BaseBall Manager</a>
+        </div>
+        <div class="nav-links">
+            <a th:href="@{/games}">試合</a>
+            <a th:href="@{/gamestats}">成績</a>
+            <a th:href="@{/players}">選手</a>
+        </div>
+    </nav>
+</body>
+</html>
