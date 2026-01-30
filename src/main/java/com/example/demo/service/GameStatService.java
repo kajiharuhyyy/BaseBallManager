@@ -95,6 +95,8 @@ public class GameStatService {
     public GameStat updateHitter(Long id, GameStatHitterForm form) {
         GameStat gameStat = getById(id);
 
+        gameStat.setGameId(form.getGameId());
+        gameStat.setPlayerId(form.getPlayerId());
         gameStat.setAtBats(form.getAtBats());
         gameStat.setHits(form.getHits());
         gameStat.setHomeRuns(form.getHomeRuns());

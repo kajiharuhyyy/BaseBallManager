@@ -117,15 +117,15 @@ public class GameStatController {
 	@GetMapping("/gamestats/pitchers/{id}/edit")
     public String editPitchStat(@PathVariable Long id,
             Model model) {
-        GameStat gameStatusPitcher = gameStatService.getById(id);
+        GameStat gameStat = gameStatService.getById(id);
 
         GameStatPitcherForm pForm = new GameStatPitcherForm();
-        pForm.setId(gameStatusPitcher.getId());
-        pForm.setGameId(gameStatusPitcher.getGameId());
-        pForm.setPlayerId(gameStatusPitcher.getPlayerId()); 
-        pForm.setInningsPitched(gameStatusPitcher.getInningsPitched());
-        pForm.setRunsAllowed(gameStatusPitcher.getRunsAllowed());
-        pForm.setWins(gameStatusPitcher.getWins());
+        pForm.setId(gameStat.getId());
+        pForm.setGameId(gameStat.getGameId());
+        pForm.setPlayerId(gameStat.getPlayerId()); 
+        pForm.setInningsPitched(gameStat.getInningsPitched());
+        pForm.setRunsAllowed(gameStat.getRunsAllowed());
+        pForm.setWins(gameStat.getWins());
 
         model.addAttribute("gameStatPitcherForm", pForm);
         return "gamestats/pitchers/edit";
