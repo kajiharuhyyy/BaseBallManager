@@ -180,6 +180,6 @@ public class GameStatController {
 
     private void addReferenceData(Model model) {
 		model.addAttribute("players", playerService.search(null, null, null));
-		model.addAttribute("games", gameService.search(null, null, null, null));
+		model.addAttribute("games", gameService.search(null, null, null, null, null, null));
 	}
 }

@@ -1,6 +1,7 @@
 package com.example.demo.web.form;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,4 +18,10 @@ public class GameForm {
 
 	@NotBlank
 	private String opponent;
+	
+	@NotNull
+	private LocalTime startTime;
+	
+	@NotBlank
+	private String ground;
 }

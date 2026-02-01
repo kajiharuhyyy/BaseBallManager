@@ -8,7 +8,9 @@ CREATE TABLE players (
 CREATE TABLE games (
   id BIGINT AUTO_INCREMENT PRIMARY KEY,
   game_date DATE NOT NULL,
-  opponent VARCHAR(50)
+  opponent VARCHAR(50),
+  ground VARCHAR(50),
+  start_time TIME NOT NULL
 );
 
 CREATE TABLE game_stats (

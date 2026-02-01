@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.stereotype.Service;
@@ -19,10 +20,12 @@ public class GameService {
 
 	private final GameRepository gameRepository;
 	
-	public List<Game> search(LocalDate gameDate, String opponent, Integer myScore, Integer opponentScore) {
+	public List<Game> search(LocalDate gameDate, String opponent, LocalTime startTime, String ground, Integer myScore, Integer opponentScore) {
 	    return gameRepository.findAll().stream()
 	        .filter(g -> gameDate == null || gameDate.equals(g.getGameDate()))
 	        .filter(g -> opponent == null || opponent.isBlank() || (g.getOpponent() != null && g.getOpponent().contains(opponent.trim())))
+	        .filter(g -> startTime == null || startTime.equals(g.getStartTime()))
+	        .filter(g -> ground == null || ground.isBlank() || (g.getGround() != null && g.getGround().contains(ground.trim())))
 	        .filter(g -> myScore == null || (g.getMyScore() != null && g.getMyScore().equals(myScore)))
 	        .filter(g -> opponentScore == null || (g.getOpponentScore() != null && g.getOpponentScore().equals(opponentScore)))
 	        .toList();
@@ -39,6 +42,8 @@ public class GameService {
 		Game game = Game.builder()
 				.gameDate(form.getGameDate())
 				.opponent(form.getOpponent())
+				.startTime(form.getStartTime())
+				.ground(form.getGround())
 				.build();
 		
 		return gameRepository.save(game);
@@ -55,6 +60,8 @@ public class GameService {
 		
 		game.setGameDate(form.getGameDate());
 		game.setOpponent(form.getOpponent());
+		game.setStartTime(form.getStartTime());
+		game.setGround(form.getGround());
 		
 		return game;
 	}

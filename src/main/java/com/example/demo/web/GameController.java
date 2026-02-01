@@ -1,6 +1,7 @@
 package com.example.demo.web;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import jakarta.validation.Valid;
@@ -31,11 +32,13 @@ public class GameController {
 	public String listGame(
 			@RequestParam(required = false) LocalDate gameDate,
 			@RequestParam(required = false) String opponent,
+			@RequestParam(required = false) LocalTime startTime,
+			@RequestParam(required = false) String ground,
 			@RequestParam(required = false) Integer myScore,
 			@RequestParam(required = false) Integer opponentScore,
 			Model model) {
 		
-		List<Game> games = gameService.search(gameDate, opponent, myScore, opponentScore);
+		List<Game> games = gameService.search(gameDate, opponent, startTime, ground, myScore, opponentScore);
 		
 		model.addAttribute("games", games);
 		return "games/list";
@@ -72,7 +75,9 @@ public class GameController {
         GameForm form = new GameForm();
         form.setId(game.getId());
         form.setGameDate(game.getGameDate());
-        form.setOpponent(game.getOpponent()); 
+        form.setOpponent(game.getOpponent());
+        form.setStartTime(game.getStartTime());
+        form.setGround(game.getGround());
 
         model.addAttribute("gameForm", form);
         return "games/edit";

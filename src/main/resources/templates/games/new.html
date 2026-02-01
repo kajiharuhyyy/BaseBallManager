@@ -22,6 +22,19 @@
             <label for="opponent">対戦相手</label>
             <input id="opponent" type="text" th:field="*{opponent}">
         </div>
+		
+		<div class="field">
+		    <label for="startTime">試合開始時間</label>
+		    <input id="startTime" type="time" th:field="*{startTime}">
+		    <div class="error" th:if="${#fields.hasErrors('startTime')}" th:errors="*{startTime}"></div>
+		</div>
+
+		<div class="field">
+		    <label for="ground">試合場所</label>
+		    <input id="ground" type="text" th:field="*{ground}">
+		    <div class="error" th:if="${#fields.hasErrors('ground')}" th:errors="*{ground}"></div>
+		</div>
+
 
 		    <div class="actions">
 		        <button class="btn btn-primary" type="submit">登録</button>

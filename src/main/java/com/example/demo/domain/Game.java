@@ -1,6 +1,7 @@
 package com.example.demo.domain;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,6 +32,12 @@ public class Game {
 	@Column(nullable = true)
 	private String opponent;
 	
+	@Column(name = "start_time", nullable = true)
+	private LocalTime startTime;
+	
+	@Column(nullable = true)
+	private String ground;
+	
 	@Column(name = "my_score", nullable = true)
 	private Integer myScore;
 	
@@ -38,9 +45,11 @@ public class Game {
 	private Integer opponentScore;
 	
 	@Builder
-	public Game(LocalDate gameDate, String opponent, Integer myScore, Integer opponentScore) {
+	public Game(LocalDate gameDate, String opponent, String ground, LocalTime startTime, Integer myScore, Integer opponentScore) {
 		this.gameDate = gameDate;
 		this.opponent = opponent;
+		this.startTime = startTime;
+		this.ground = ground;
 		this.myScore = myScore;
 		this.opponentScore = opponentScore;
 	}
