@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>BaseBall Manager</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav :: nav"></div>
+    <div class="page">
+        <div class="card">
+            <h1>BaseBall Manager</h1>
+            <div class="subtitle">スコア入力・成績入力・選手管理をまとめて行えます。</div>
+            <div class="actions" style="margin-top: 16px;">
+                <a class="btn btn-primary" th:href="@{/games}">野球スコアをつける</a>
+                <a class="btn btn-secondary" th:href="@{/gamestats}">成績を入力する</a>
+                <a class="btn" th:href="@{/players}">チームのメンバー編集</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>選手登録</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav :: nav"></div>
+    <div class="page">
+        <h1>選手登録</h1>
+        <div class="subtitle">選手情報を登録します。</div>
+        <div class="card">
+            <form th:action="@{/players}" th:object="${playerForm}" method="post">
+        <div class="field">
+            <label for="name">名前</label>
+            <input id="name" type="text" th:field="*{name}">
+            <div class="error" th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></div>
+        </div>
+
+        <div class="field">
+            <label for="position">ポジション</label>
+            <select id="position" th:field="*{position}">
+                <option value="">選択してください</option>
+                <option value="投手">投手</option>
+                <option value="捕手">捕手</option>
+                <option value="内野手">内野手</option>
+                <option value="外野手">外野手</option>
+            </select>
+            <div class="error" th:if="${#fields.hasErrors('position')}" th:errors="*{position}"></div>
+        </div>
+
+        <div class="field">
+            <label for="uniformNumber">背番号</label>
+            <input id="uniformNumber" type="number" th:field="*{uniformNumber}">
+            <div class="error" th:if="${#fields.hasErrors('uniformNumber')}" th:errors="*{uniformNumber}"></div>
+        </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">登録</button>
+                    <a class="btn" th:href="@{/players}">戻る</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

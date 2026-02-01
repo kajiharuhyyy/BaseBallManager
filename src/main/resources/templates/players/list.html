@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>選手一覧</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav :: nav"></div>
+    <div class="page">
+        <div class="header">
+            <div>
+                <h1>選手一覧</h1>
+                <div class="subtitle">登録選手を検索・管理できます。</div>
+            </div>
+            <a class="btn btn-primary" th:href="@{/players/new}">新規登録</a>
+        </div>
+
+    <div class="card">
+    <form class="grid" method="get" th:action="@{/players}">
+        <label>
+            名前
+            <input type="text" name="name" th:value="${param.name}">
+        </label>
+        <label>
+            ポジション
+            <select name="position">
+                <option value="" th:selected="${param.position == null or param.position.isEmpty()}">指定なし</option>
+                <option value="投手" th:selected="${param.position == '投手'}">投手</option>
+                <option value="捕手" th:selected="${param.position == '捕手'}">捕手</option>
+                <option value="内野手" th:selected="${param.position == '内野手'}">内野手</option>
+                <option value="外野手" th:selected="${param.position == '外野手'}">外野手</option>
+            </select>
+        </label>
+        <label>
+            背番号
+            <input type="number" name="uniformNumber" th:value="${param.uniformNumber}">
+        </label>
+        <button class="btn btn-primary" type="submit">検索</button>
+    </form>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名前</th>
+                <th>ポジション</th>
+                <th>背番号</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(players)}">
+                <td colspan="5">選手が登録されていません。</td>
+            </tr>
+            <tr th:each="player : ${players}">
+                <td th:text="${player.id}"></td>
+                <td th:text="${player.name}"></td>
+                <td th:text="${player.position}"></td>
+                <td th:text="${player.uniformNumber}"></td>
+                <td>
+                    <div class="actions">
+                        <a class="btn" th:href="@{/players/{id}/edit(id=${player.id})}">編集</a>
+                        <form th:action="@{/players/{id}/delete(id=${player.id})}" method="post"
+                              onsubmit="return confirm('削除しますか？');">
+                            <button class="btn btn-danger" type="submit">削除</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+</body>
+</html>

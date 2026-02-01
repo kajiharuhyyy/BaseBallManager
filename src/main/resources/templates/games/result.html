@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>試合結果入力</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav :: nav"></div>
+    <div class="page">
+        <h1>試合結果入力</h1>
+        <div class="subtitle">得点結果を入力してください。</div>
+        <div class="card">
+            <form th:action="@{/games/{id}/result(id=${gameResultForm.id})}" th:object="${gameResultForm}" method="post">
+        <input type="hidden" th:field="*{id}">
+
+        <div class="field">
+            <label for="myScore">自チーム得点</label>
+            <input id="myScore" type="number" th:field="*{myScore}">
+            <div class="error" th:if="${#fields.hasErrors('myScore')}" th:errors="*{myScore}"></div>
+        </div>
+
+        <div class="field">
+            <label for="opponentScore">相手得点</label>
+            <input id="opponentScore" type="number" th:field="*{opponentScore}">
+            <div class="error" th:if="${#fields.hasErrors('opponentScore')}" th:errors="*{opponentScore}"></div>
+        </div>
+
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">保存</button>
+                    <a class="btn" th:href="@{/games}">戻る</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

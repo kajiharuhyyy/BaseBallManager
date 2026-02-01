@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>成績一覧</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav :: nav"></div>
+    <div class="page">
+        <div class="header">
+            <div>
+                <h1>成績一覧</h1>
+                <div class="subtitle">試合別・選手別の成績を検索できます。</div>
+            </div>
+            <div class="actions">
+                <a class="btn btn-secondary" th:href="@{/gamestats/hitters/new}">打者成績入力</a>
+                <a class="btn btn-primary" th:href="@{/gamestats/pitchers/new}">投手成績入力</a>
+            </div>
+        </div>
+
+        <div class="card">
+            <form class="grid" method="get" th:action="@{/gamestats}">
+                <label>
+                    試合ID
+                    <input type="number" name="gameId" th:value="${param.gameId}">
+                </label>
+                <label>
+                    選手ID
+                    <input type="number" name="playerId" th:value="${param.playerId}">
+                </label>
+                <label>
+                    打数
+                    <input type="number" name="atBats" th:value="${param.atBats}">
+                </label>
+                <label>
+                    安打
+                    <input type="number" name="hits" th:value="${param.hits}">
+                </label>
+                <label>
+                    本塁打
+                    <input type="number" name="homeRuns" th:value="${param.homeRuns}">
+                </label>
+                <label>
+                    四球
+                    <input type="number" name="walks" th:value="${param.walks}">
+                </label>
+                <label>
+                    盗塁
+                    <input type="number" name="stolenBases" th:value="${param.stolenBases}">
+                </label>
+                <label>
+                    投球回
+                    <input type="text" name="inningsPitched" th:value="${param.inningsPitched}">
+                </label>
+                <label>
+                    失点
+                    <input type="number" name="runsAllowed" th:value="${param.runsAllowed}">
+                </label>
+                <label>
+                    勝敗
+                    <input type="text" name="wins" th:value="${param.wins}">
+                </label>
+                <button class="btn btn-primary" type="submit">検索</button>
+            </form>
+        </div>
+
+        <div class="card" style="margin-top: 16px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>試合ID</th>
+                        <th>選手ID</th>
+                        <th>打数</th>
+                        <th>安打</th>
+                        <th>本塁打</th>
+                        <th>四球</th>
+                        <th>盗塁</th>
+                        <th>投球回</th>
+                        <th>失点</th>
+                        <th>勝敗</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${#lists.isEmpty(gameStats)}">
+                        <td colspan="12">成績が登録されていません。</td>
+                    </tr>
+                    <tr th:each="stat : ${gameStats}">
+                        <td th:text="${stat.id}"></td>
+                        <td th:text="${stat.gameId}"></td>
+                        <td th:text="${stat.playerId}"></td>
+                        <td th:text="${stat.atBats}"></td>
+                        <td th:text="${stat.hits}"></td>
+                        <td th:text="${stat.homeRuns}"></td>
+                        <td th:text="${stat.walks}"></td>
+                        <td th:text="${stat.stolenBases}"></td>
+                        <td th:text="${stat.inningsPitched}"></td>
+                        <td th:text="${stat.runsAllowed}"></td>
+                        <td th:text="${stat.wins}"></td>
+                        <td>
+                            <div class="actions">
+                                <a class="btn" th:href="@{/gamestats/hitters/{id}/edit(id=${stat.id})}">打者編集</a>
+                                <a class="btn" th:href="@{/gamestats/pitchers/{id}/edit(id=${stat.id})}">投手編集</a>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

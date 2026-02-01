@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>試合一覧</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div th:replace="fragments/nav :: nav"></div>
+    <div class="page">
+        <div class="header">
+            <div>
+                <h1>試合一覧</h1>
+                <div class="subtitle">試合情報を検索・管理できます。</div>
+            </div>
+            <a class="btn btn-primary" th:href="@{/games/new}">新規登録</a>
+        </div>
+
+    <div class="card">
+    <form class="grid" method="get" th:action="@{/games}">
+        <label>
+            試合日
+            <input type="date" name="gameDate" th:value="${param.gameDate}">
+        </label>
+        <label>
+            対戦相手
+            <input type="text" name="opponent" th:value="${param.opponent}">
+        </label>
+        <label>
+            開始時間
+            <input type="time" name="startTime" th:value="${param.startTime}">
+        </label>
+        <label>
+            試合場所
+            <input type="text" name="ground" th:value="${param.ground}">
+        </label>
+        <label>
+            自チーム得点
+            <input type="number" name="myScore" th:value="${param.myScore}">
+        </label>
+        <label>
+            相手得点
+            <input type="number" name="opponentScore" th:value="${param.opponentScore}">
+        </label>
+        <button class="btn btn-primary" type="submit">検索</button>
+    </form>
+    </div>
+
+    <div class="card" style="margin-top: 16px;">
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>試合日</th>
+                <th>対戦相手</th>
+                <th>開始時間</th>
+                <th>試合場所</th>
+                <th>自チーム得点</th>
+                <th>相手得点</th>
+                <th>操作</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:if="${#lists.isEmpty(games)}">
+                <td colspan="8">試合が登録されていません。</td>
+            </tr>
+            <tr th:each="game : ${games}">
+                <td th:text="${game.id}"></td>
+                <td th:text="${game.gameDate}"></td>
+                <td th:text="${game.opponent}"></td>
+                <td th:text="${game.startTime}"></td>
+                <td th:text="${game.ground}"></td>
+                <td th:text="${game.myScore}"></td>
+                <td th:text="${game.opponentScore}"></td>
+                <td>
+                    <div class="actions">
+                        <a class="btn" th:href="@{/games/{id}/edit(id=${game.id})}">編集</a>
+                        <a class="btn btn-secondary" th:href="@{/games/{id}/result(id=${game.id})}">結果入力</a>
+                        <form th:action="@{/games/{id}/delete(id=${game.id})}" method="post"
+                              onsubmit="return confirm('削除しますか？');">
+                            <button class="btn btn-danger" type="submit">削除</button>
+                        </form>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+    </div>
+    </div>
+</body>
+</html>
